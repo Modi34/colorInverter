@@ -18,4 +18,9 @@ function changeIcon(id, isEnabled) {
 
 chrome.tabs.onUpdated.addListener(check)
 chrome.tabs.onActivated.addListener(check)
-chrome.storage.onChanged.addListener(check);
+chrome.storage.onChanged.addListener(changed => {
+	let hostname = Object.keys(changed)[0];
+	if(changed[hostname]?.oldValue?.isEnabled != changed[hostname]?.newValue?.isEnabled){
+		check()
+	}
+});
