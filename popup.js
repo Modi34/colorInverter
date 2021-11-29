@@ -19,7 +19,7 @@ let hostName = '';
 let settings = {}
 chrome.tabs.query({ currentWindow: true, active: true }, tabs=>{
 	if(!tabs[0]){return}
-	hostName = new URL(tabs[0].url).host;
+	hostName = new URL(tabs[0].url).hostname;
 	reloadSettings()
 })
 
