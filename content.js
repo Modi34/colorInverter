@@ -7,7 +7,7 @@ function invertStyles(params){
 	if(!params){return}
 	let {isEnabled, hue = 0, invert = 85} = params;
 	let filter = `invert(${100-(100-invert)}%) hue-rotate(${365-hue}deg)`;
-	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg); background: #fff} video,img{filter:${filter};}`
+	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg); background: #fff} video,img,svg{filter:${filter};}`
 
 	isEnabled ?
 		document.head.appendChild(styleNode) :
