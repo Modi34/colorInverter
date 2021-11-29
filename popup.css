@@ -1,0 +1,53 @@
+html{
+	display: table;
+}
+
+body, form{
+	margin: 0;
+}
+
+#form{
+	text-align: center;
+	margin: 0 0 0 0;
+}
+
+.forEnabled{
+	display: none;
+}
+.enabled .forEnabled{
+	display: block;
+}
+.enabled .forDisabled{
+	display: none;
+}
+
+button, label{
+	display: block;
+	width: 100%;
+}
+
+label{
+	padding-top: 5px;
+}
+
+input{
+	cursor: pointer;
+}
+
+button{
+	border: 0;
+	cursor: pointer;
+	padding: 5px 10px;
+	border-radius: 0;
+	background: #efefef;
+}
+
+#button_enable{
+	background: transparent;
+}
+#button_enable:hover, button:hover{
+	background: #D6D6D6
+}
+#button_enable:active, button:active{
+	background: #B0B0B0;
+}

@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Настройки</title>
+	<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+	<form id="form">
+		<button class="forDisabled" id="button_enable" name="isEnabled" value="true">Enable</button>
+		<button class="forEnabled" id="button_disable" name="isEnabled" value="false">Disable</button>
+		<label class="forEnabled">
+			Intencity
+			<input id="input_invert_range" type="range" name="invert" value="0" min="0" max="100">
+		</label>
+		<label class="forEnabled">
+			Colors
+			<input id="input_hue_range" type="range" name="hue" value="0" min="0" max="360">
+		</label>
+	</form>
+	<script type="text/javascript" src="./popup.js"></script>
+</body>
+</html>

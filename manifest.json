@@ -1,0 +1,27 @@
+{
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "icons": {
+    "512": "enabled.png"
+  },
+  "description": "Invert color on sites that do not support dark mode",
+  "manifest_version": 2,
+  "name": "colorInverter",
+  "browser_action": {
+	"default_title": "Settings",
+	"default_popup": "popup.html",
+	"default_icon": "disabled.png"
+  },
+  "content_scripts": [
+  	{
+		"matches": ["<all_urls>"],
+		"run_at": "document_start",
+		"js": ["content.js"]
+  	}
+  ],
+  "permissions": ["storage", "activeTab", "tabs"],
+  "version": "0.0.1"
+}
