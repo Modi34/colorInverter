@@ -1,6 +1,6 @@
 # colorInverter
 
-Lightweight browser extension to invert colors on pages that do not support dark mode yet.
+Lightweight browser extension to adjust colors on any webpage to your liking
 
 Features:
 * Change invertion intensity
