@@ -3,16 +3,14 @@ function check() {
 		let tab = tabs[0];
 		if(tab && ~tab.url.indexOf('http')){
 			let hostName = new URL( tab.url ).hostname;
-		    	chrome.storage.local.get(hostName, data =>{
-		    		changeIcon(tab.id, data[ hostName ]?.isEnabled || false)
-		    	})
+		    	chrome.storage.local.get(hostName, data =>
+		    		chrome.browserAction.setIcon({ 
+		    			tabId: tab.id, 
+		    			path: data[ hostName ]?.isEnabled ? 'enabled_38.png' : 'disabled_38.png' 
+		    		})
+		    	)
 		}
 	})
-}
-
-function changeIcon(id, isEnabled) {
-    let path = isEnabled ? 'enabled_38.png' : 'disabled_38.png';
-    chrome.browserAction.setIcon({ tabId: id, path })
 }
 
 chrome.tabs.onUpdated.addListener( check )
