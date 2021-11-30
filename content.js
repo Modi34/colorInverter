@@ -1,20 +1,23 @@
-let hostname = document.location.hostname;
+let hostName = document.location.hostname;
 let xpathExpression = new XPathEvaluator().createExpression(`//*[not(contains(@class, 'colorInverter')) and contains(@style, 'url(')]`)
 let isObserving = false;
 
 let styleNode = document.createElement('style')
-let observer = new MutationObserver(scanBackgroundImageNodes);
+let observer = new MutationObserver( scanBackgroundImageNodes );
 
 function invertStyles(params){
 	if(!params){return}
-	let {isEnabled, hue = 0, invert = 85} = params;
-	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg); background: #fff} video,img,svg,.colorInverter{filter: invert(${100-(100-invert)}%) hue-rotate(${365-hue}deg);}`
+	let {isEnabled = false, hue = 0, invert = 85} = params;
+	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg); background-color: ${invert > 50 ? '#fff' : '#000'}}`+
+				`video,img,svg,.colorInverter{filter: invert(${100-(100-invert)}%) hue-rotate(${365-hue}deg);}`
 
 	if(isEnabled){
-		!isObserving && observer.observe(document, {childList: true, subtree: true})
-		isObserving = true;
+		if(!isObserving){ 
+			observer.observe(document, {childList: true, subtree: true})
+			isObserving = true;
+		}
 
-		document.head.appendChild(styleNode)
+		document.head.appendChild( styleNode )
 		scanBackgroundImageNodes()
 	}else{
 		observer.disconnect();
@@ -25,8 +28,8 @@ function invertStyles(params){
 
 }
 
-chrome.storage.onChanged.addListener(changes => hostname in changes && invertStyles( changes[ hostname ].newValue ));
-chrome.storage.local.get(hostname, data => invertStyles( data[ hostname ] ))
+chrome.storage.onChanged.addListener(changes => hostName in changes && invertStyles( changes[ hostName ].newValue ));
+chrome.storage.local.get(hostName, data => invertStyles( data[ hostName ] ))
 
 async function scanBackgroundImageNodes(){
 	let iterator = xpathExpression.evaluate(document, XPathResult.UNORDERED_NODE_ITERATOR_TYPE);

@@ -1,11 +1,10 @@
 function check() {
-	chrome.tabs.query({ currentWindow: true, active: true }, tabs=>{
-		if(!tabs[0]){return}
+	chrome.tabs.query({ currentWindow: true, active: true }, tabs =>{
 		let tab = tabs[0];
-		if(tab.url.indexOf('http') > -1){
-			let hostname = new URL( tab.url ).hostname;
-		    	chrome.storage.local.get(hostname, data => {
-		    		changeIcon(tab.id, data[hostname]?.isEnabled || false)
+		if(tab && ~tab.url.indexOf('http')){
+			let hostName = new URL( tab.url ).hostname;
+		    	chrome.storage.local.get(hostName, data =>{
+		    		changeIcon(tab.id, data[ hostName ]?.isEnabled || false)
 		    	})
 		}
 	})
@@ -16,11 +15,11 @@ function changeIcon(id, isEnabled) {
     chrome.browserAction.setIcon({ tabId: id, path })
 }
 
-chrome.tabs.onUpdated.addListener(check)
-chrome.tabs.onActivated.addListener(check)
-chrome.storage.onChanged.addListener(changed => {
-	let hostname = Object.keys(changed)[0];
-	if(changed[hostname]?.oldValue?.isEnabled != changed[hostname]?.newValue?.isEnabled){
+chrome.tabs.onUpdated.addListener( check )
+chrome.tabs.onActivated.addListener( check )
+chrome.storage.onChanged.addListener(changed =>{
+	let hostName = Object.keys(changed)[0];
+	if(changed[ hostName ]?.oldValue?.isEnabled != changed[ hostName ]?.newValue?.isEnabled){
 		check()
 	}
 });

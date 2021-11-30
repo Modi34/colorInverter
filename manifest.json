@@ -1,4 +1,6 @@
 {
+  "author": "modi34@yandex.ru",
+  "homepage_url": "https://github.com/Modi34/colorInverter/",
   "background": {
     "scripts": [
       "background.js"
@@ -7,7 +9,7 @@
   "icons": {
     "512": "enabled.png"
   },
-  "description": "Invert color on sites that do not support dark mode",
+  "description": "Adjust colors on any webpage",
   "manifest_version": 2,
   "name": "colorInverter",
   "browser_action": {
