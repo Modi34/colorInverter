@@ -1,4 +1,6 @@
-let hostName = document.location.hostname;
+let isIframe = window.location != window.parent.location
+let hostName = new URL(isIframe ? document.referrer : document.location.href).hostname;
+
 let xpathExpression = new XPathEvaluator().createExpression(`//*[not(contains(@class, 'colorInverter')) and contains(@style, 'url(')]`)
 let isObserving = false;
 
@@ -8,7 +10,7 @@ let observer = new MutationObserver( scanBackgroundImageNodes );
 function invertStyles(params){
 	if(!params){return}
 	let {isEnabled = false, hue = 0, invert = 85} = params;
-	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg); background-color: ${invert > 50 ? '#fff' : '#000'}}`+
+	styleNode.textContent = (isIframe ? '' : `html{filter: invert(${invert}%) hue-rotate(${hue}deg); background-color: ${invert > 50 ? '#fff' : '#000'}}`)+
 				`video,img,svg,.colorInverter{filter: invert(${100-(100-invert)}%) hue-rotate(${365-hue}deg);}`
 
 	if(isEnabled){
