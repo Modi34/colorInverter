@@ -8,8 +8,9 @@ let observer = new MutationObserver( scanBackgroundImageNodes );
 function invertStyles(params){
 	if(!params){return}
 	let {isEnabled = false, hue = 0, invert = 85} = params;
+
 	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg); background-color: ${invert > 50 ? '#fff' : '#000'}}`+
-				`video,img,svg,iframe,.colorInverter{filter: invert(${100-(100-invert)}%) hue-rotate(${365-hue}deg);}`
+				`video,img,svg,iframe,.colorInverter{filter: invert(${invert > 50 ? 1 : 0}) hue-rotate(-${hue}grad);}`
 
 	if(isEnabled){
 		if(!isObserving){ 
