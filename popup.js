@@ -12,8 +12,8 @@ function reloadSettings(){
 		if(!data[ hostName ]){
 			data[ hostName ] = {
 				isEnabled: false,
-				invert: 85,
-				hue: 0
+				invert: 90,
+				hue: 50
 			}
 		}
 		settings = data
@@ -26,8 +26,11 @@ function updateForm(){
 
 	form.classList[isEnabled ? 'add' : 'remove']('enabled')
 
-	input_invert_range.value = invert
-	input_hue_range.value = hue
+	input_invert_range.value = invert;
+	label_invert.textContent = invert;
+	input_hue_range.value = hue;
+	label_hue.textContent = hue;
+	input_hue_range.style.filter = `invert(${invert}%)`;
 }
 
 form.onsubmit = e=>{
@@ -42,7 +45,15 @@ form.onsubmit = e=>{
 
 form.oninput = e =>{
 	if(e.target.name){
-		settings[ hostName ][ e.target.name ] = e.target.value;
+		let {name, value} = e.target;
+		settings[ hostName ][ name ] = value;
 		chrome.storage.local.set( settings )
+
+		if(name == 'invert'){
+			input_hue_range.style.filter = `invert(${value}%)`;
+			label_invert.textContent = value;
+		}else if(name == 'hue'){
+			label_hue.textContent = value;
+		}
 	}
 }
