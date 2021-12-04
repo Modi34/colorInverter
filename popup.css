@@ -37,8 +37,8 @@ input::-webkit-slider-thumb {
   -webkit-appearance: none;
   border-radius:0;
   background: #efefef;
-  border-top: 10px solid #000;
-  border-bottom: 10px solid #000;
+  border-top: 10px solid #101010;
+  border-bottom: 10px solid #101010;
   filter: invert(1)
 }
 
@@ -58,8 +58,8 @@ button{
 	text-transform: uppercase;
 	letter-spacing: 5px;
 	font-family: Helvetica;
-	letter-spacing: 40px;
-	padding: 5px 0 5px 40px;
+	letter-spacing: 30px;
+	padding: 5px 0 5px 30px;
 }
 
 #button_enable{
