@@ -1,6 +1,7 @@
 let hostName = document.location.hostname;
 let xpathExpression = new XPathEvaluator().createExpression(`//*[not(contains(@class, 'colorInverter')) and contains(@style, 'url(')]`)
 let isObserving = false;
+let timeout = false;
 
 let styleNode = document.createElement('style')
 let observer = new MutationObserver( scanBackgroundImageNodes );
@@ -29,7 +30,12 @@ function invertStyles(params){
 
 }
 
-chrome.storage.onChanged.addListener(changes => hostName in changes && invertStyles( changes[ hostName ].newValue ));
+chrome.storage.onChanged.addListener(changes =>{
+	 if(hostName in changes){
+		if(timeout){clearTimeout( timeout )}
+		timeout = setTimeout(_=>invertStyles( changes[ hostName ].newValue ),10)
+	}
+});
 chrome.storage.local.get(hostName, data => invertStyles( data[ hostName ] ))
 
 async function scanBackgroundImageNodes(){
