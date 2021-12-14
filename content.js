@@ -77,7 +77,8 @@ function fixBackgroundColor(){
 			isBackgroundChecked = true
 		}else if(document.readyState === 'complete') {
 			html.style.backgroundColor=''
-			isBackgroundSet = window.getComputedStyle(html).backgroundColor != 'rgba(0, 0, 0, 0)'
+			let backgroundColor = window.getComputedStyle(html).backgroundColor;
+			isBackgroundSet = backgroundColor != 'rgba(0, 0, 0, 0)'
 			
 			let newResult = {}
 			latestParams.isBackgroundSet = isBackgroundSet;
@@ -87,8 +88,14 @@ function fixBackgroundColor(){
 			isBackgroundChecked = true
 		}
 	}
+
 	if(!isBackgroundSet){
-		html.style.backgroundColor='#fffffffa'
-		requestAnimationFrame(_=>html.style.backgroundColor='#fff')
+		html.style.backgroundColor = '#fff'
 	}
+
+	// force browser to redraw background
+	html.style.width = 'calc(100% - 0.000001px)';
+	requestAnimationFrame(_=> requestAnimationFrame(_=>
+		html.style.width = ''
+	))
 }
