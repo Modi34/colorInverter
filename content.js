@@ -9,8 +9,12 @@ let html = document.children[0]
 let isBackgroundChecked = false;
 let isBackgroundSet = false;
 
+let latestParams = false
+
 function invertStyles(params){
 	if(!params){return}
+	latestParams = params;
+
 	let {isEnabled = false, hue = 0, invert = 85} = params;
 
 	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg)}`+
@@ -48,7 +52,8 @@ chrome.storage.onChanged.addListener(changes =>{
 });
 chrome.storage.local.get(hostName, data => {
 	if(data[ hostName ]){
-		invertStyles( data[ hostName ] )
+		latestParams = data[ hostName ];
+		invertStyles( latestParams )
 		document.onreadystatechange = () => {
 			if (document.readyState === 'complete') {
 				fixBackgroundColor()
@@ -66,12 +71,21 @@ async function scanBackgroundImageNodes(){
 }
 
 function fixBackgroundColor(){
-	if(!isBackgroundChecked && document.readyState === 'complete') {
-		html.style.backgroundColor=''
-		if(window.getComputedStyle(html).backgroundColor != 'rgba(0, 0, 0, 0)'){
-			isBackgroundSet = true
+	if(!isBackgroundChecked){
+		if('isBackgroundSet' in latestParams){
+			isBackgroundSet = latestParams.isBackgroundSet;
+			isBackgroundChecked = true
+		}else if(document.readyState === 'complete') {
+			html.style.backgroundColor=''
+			isBackgroundSet = window.getComputedStyle(html).backgroundColor != 'rgba(0, 0, 0, 0)'
+			
+			let newResult = {}
+			latestParams.isBackgroundSet = isBackgroundSet;
+			newResult[hostName] = latestParams
+			chrome.storage.local.set(newResult)
+
+			isBackgroundChecked = true
 		}
-		isBackgroundChecked = true
 	}
 	if(!isBackgroundSet){
 		html.style.backgroundColor='#fffffffa'
