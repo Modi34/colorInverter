@@ -5,13 +5,16 @@ let timeout = false;
 
 let styleNode = document.createElement('style')
 let observer = new MutationObserver( scanBackgroundImageNodes );
+let html = document.children[0]
 
 function invertStyles(params){
 	if(!params){return}
 	let {isEnabled = false, hue = 0, invert = 85} = params;
 
-	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg); background-color: #fff}*::selection{background-color:#27b8d2}`+
-				`video,img,svg,iframe,[data-color-inverter='true']{filter: invert(${invert > 50 ? 1 : 0}) hue-rotate(-${hue}grad);}`
+	styleNode.textContent = `html{filter: invert(${invert}%) hue-rotate(${hue}deg)}`+
+				`*::selection{background-color:#27b8d2}`+
+				`video,img,svg,iframe,[data-color-inverter='true']{filter: invert(${invert > 50 ? 1 : 0}) hue-rotate(-${hue}grad);}`+
+				`[data-color-inverter='true'] img, [data-color-inverter='true'] video, [data-color-inverter='true'] svg, [data-color-inverter='true'] iframe{filter: invert(0)}`
 
 	if(isEnabled){
 		if(!isObserving){ 
@@ -21,6 +24,10 @@ function invertStyles(params){
 
 		document.head.appendChild( styleNode )
 		scanBackgroundImageNodes()
+
+		// cached background fix
+		html.style.backgroundColor='#fffffffa'
+		setTimeout(_=>html.style.backgroundColor='#fff', 10)
 	}else{
 		observer.disconnect();
 		isObserving = false
