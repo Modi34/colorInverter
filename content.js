@@ -6,6 +6,8 @@ let timeout = false;
 let styleNode = document.createElement('style')
 let observer = new MutationObserver( scanBackgroundImageNodes );
 let html = document.children[0]
+let isBackgroundChecked = false;
+let isBackgroundSet = false;
 
 function invertStyles(params){
 	if(!params){return}
@@ -25,14 +27,15 @@ function invertStyles(params){
 		document.head.appendChild( styleNode )
 		scanBackgroundImageNodes()
 
-		// cached background fix
-		html.style.backgroundColor='#fffffffa'
-		requestAnimationFrame(_=>html.style.backgroundColor='#fff')
+		fixBackgroundColor()
 	}else{
 		observer.disconnect();
 		isObserving = false
 
 		styleNode.remove()
+		if(!isBackgroundSet){
+			html.style.backgroundColor=''
+		}
 	}
 
 }
@@ -43,12 +46,35 @@ chrome.storage.onChanged.addListener(changes =>{
 		timeout = setTimeout(_=>invertStyles( changes[ hostName ].newValue ), 0)
 	}
 });
-chrome.storage.local.get(hostName, data => invertStyles( data[ hostName ] ))
+chrome.storage.local.get(hostName, data => {
+	if(data[ hostName ]){
+		invertStyles( data[ hostName ] )
+		document.onreadystatechange = () => {
+			if (document.readyState === 'complete') {
+				fixBackgroundColor()
+			}
+		};
+	}
+})
 
 async function scanBackgroundImageNodes(){
 	let iterator = xpathExpression.evaluate(document, XPathResult.UNORDERED_NODE_ITERATOR_TYPE);
 	let node;
 	while(node = iterator.iterateNext()){
 		setTimeout(n=>n.dataset.colorInverter = true, 0, node)
+	}
+}
+
+function fixBackgroundColor(){
+	if(!isBackgroundChecked && document.readyState === 'complete') {
+		html.style.backgroundColor=''
+		if(window.getComputedStyle(html).backgroundColor != 'rgba(0, 0, 0, 0)'){
+			isBackgroundSet = true
+		}
+		isBackgroundChecked = true
+	}
+	if(!isBackgroundSet){
+		html.style.backgroundColor='#fffffffa'
+		requestAnimationFrame(_=>html.style.backgroundColor='#fff')
 	}
 }
