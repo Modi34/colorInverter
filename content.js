@@ -27,7 +27,7 @@ function invertStyles(params){
 
 		// cached background fix
 		html.style.backgroundColor='#fffffffa'
-		setTimeout(_=>html.style.backgroundColor='#fff', 10)
+		requestAnimationFrame(_=>html.style.backgroundColor='#fff')
 	}else{
 		observer.disconnect();
 		isObserving = false
