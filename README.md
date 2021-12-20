@@ -1,3 +1,6 @@
+DEPRECIATED
+Found chrome flag chrome://flags/#enable-force-dark
+
 # colorInverter
 
 Lightweight browser extension to adjust colors on any webpage to your liking
