@@ -10,4 +10,4 @@ Features:
 
 Native alternative - chrome://flags/#enable-force-dark
 
-video demo - [![Alt text](https://img.youtube.com/vi/JM6lTfOpwxU/0.jpg)](https://www.youtube.com/watch?v=JM6lTfOpwxU)
+[![Alt text](https://img.youtube.com/vi/JM6lTfOpwxU/0.jpg)](https://www.youtube.com/watch?v=JM6lTfOpwxU)
