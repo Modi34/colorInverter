@@ -54,11 +54,7 @@ chrome.storage.local.get(hostName, data => {
 	if(data[ hostName ]){
 		latestParams = data[ hostName ];
 		invertStyles( latestParams )
-		document.onreadystatechange = () => {
-			if (document.readyState === 'complete') {
-				fixBackgroundColor()
-			}
-		};
+		document.addEventListener('readystatechange', fixBackgroundColor)
 	}
 })
 
