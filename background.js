@@ -1,6 +1,6 @@
 function check() {
 	getActiveTab(tab => {
-		let hostName = new URL( tab.url ).hostname
+		let hostName = new URL( tab.url || tab.pendingUrl ).hostname
 		chrome.storage.local.get(hostName, data =>
 	    		chrome.browserAction.setIcon({ 
 	    			tabId: tab.id, 
