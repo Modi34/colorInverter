@@ -1,29 +1,23 @@
 {
-  "author": "modi34@yandex.ru",
-  "homepage_url": "https://github.com/Modi34/colorInverter/",
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
-  },
-  "icons": {
-    "512": "enabled.png"
-  },
-  "description": "Adjust colors on any webpage",
-  "manifest_version": 2,
-  "name": "colorInverter",
-  "browser_action": {
-	"default_title": "Settings",
-	"default_popup": "popup.html",
-	"default_icon": "disabled.png"
-  },
-  "content_scripts": [
-  	{
-		"matches": ["<all_urls>"],
-		"run_at": "document_start",
-		"js": ["content.js"]
-  	}
-  ],
-  "permissions": ["storage", "activeTab", "tabs"],
-  "version": "0.0.1"
+	"author": "modi34@yandex.ru",
+	"homepage_url": "https://github.com/Modi34/colorInverter/",
+	"background": {"scripts": ["background.js"]},
+	"icons": {"38": "enabled.png"},
+	"description": "Adjust colors on any webpage",
+	"manifest_version": 2,
+	"name": "colorInverter",
+	"browser_action": {
+		"default_title": "Invert colors",
+		"default_popup": "popup.html",
+		"default_icon": "disabled.png"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"run_at": "document_start",
+			"js": ["content.js"]
+		}
+	],
+	"permissions": ["storage", "tabs"],
+	"version": "0.0.2"
 }
