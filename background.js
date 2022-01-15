@@ -1,15 +1,23 @@
 function check() {
-	chrome.tabs.query({ currentWindow: true, active: true }, tabs =>{
-		let tab = tabs[0];
-		if(tab && ~tab.url.indexOf('http')){
-			let hostName = new URL( tab.url ).hostname;
-		    	chrome.storage.local.get(hostName, data =>
-		    		chrome.browserAction.setIcon({ 
-		    			tabId: tab.id, 
-		    			path: data[ hostName ]?.isEnabled ? 'enabled_38.png' : 'disabled_38.png' 
-		    		})
-		    	)
+	getActiveTab(tab => {
+		let hostName = new URL( tab.url ).hostname
+		chrome.storage.local.get(hostName, data =>
+	    		chrome.browserAction.setIcon({ 
+	    			tabId: tab.id, 
+	    			path: data[ hostName ]?.isEnabled ? 'enabled.png' : 'disabled.png' 
+	    		})
+	    	)
+	})
+}
+
+function getActiveTab(callback){
+	chrome.windows.getCurrent({populate: true}, function(win){
+		for( let tab of win.tabs ){
+			if(tab.active){
+				return callback( tab )
+			}
 		}
+		return callback( false )
 	})
 }
 
