@@ -1,25 +1,18 @@
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Настройки</title>
-	<link rel="stylesheet" href="popup.css">
-</head>
-<body>
-	<form id="form">
-		<button class="forDisabled" id="button_enable" name="isEnabled" value="true">Enable</button>
-		<button class="forEnabled" id="button_disable" name="isEnabled" value="false">Disable</button>
-		<div class="forEnabled">
-			<span>
-				<b id="label_invert">100</b>
-			</span>
-			<input id="input_invert_range" type="range" name="invert" step="1" value="0" min="0" max="100">
-			<span>
-				<b id="label_hue">400</b>
-			</span>
-			<input id="input_hue_range" type="range" name="hue" step="1" value="0" min="0" max="400">
-		</div>
-	</form>
-	<script type="text/javascript" src="./popup.js"></script>
-</body>
-</html>
+<link rel="stylesheet" href="popup.css">
+<h1 class="forUnsupported">Sorry this page is not supported</h1>
+<form id="form">
+	<button class="forDisabled" id="button_enable" name="isEnabled" value="true">Enable</button>
+	<button class="forEnabled" id="button_disable" name="isEnabled" value="false">Disable</button>
+	<div class="forEnabled">
+		<span>
+			<b id="label_invert">100</b>
+		</span>
+		<input id="input_invert_range" type="range" name="invert" step="1" value="0" min="0" max="100">
+		<span>
+			<b id="label_hue">400</b>
+		</span>
+		<span id="background4hue"></span>
+		<input id="input_hue_range" type="range" name="hue" step="1" value="0" min="0" max="400">
+	</div>
+</form>
+<script type="text/javascript" src="./popup.js"></script>

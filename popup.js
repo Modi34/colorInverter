@@ -1,9 +1,28 @@
 let hostName = '';
 let settings = {}
 
-chrome.tabs.query({ currentWindow: true, active: true }, tabs=>{
-	if(!tabs[0]){return}
-	hostName = new URL(tabs[0].url).hostname;
+function getActiveTab(callback){
+	chrome.windows.getCurrent({populate: true}, function(win){
+		for( let tab of win.tabs ){
+			if(tab.active){
+				return callback( tab )
+			}
+		}
+		return callback( false )
+	})
+}
+
+getActiveTab(tab => {
+	if(!tab){return}
+	console.log(tab)
+
+	let parsedUrl = new URL(tab.url)
+	if(parsedUrl.protocol == 'chrome:'){
+		document.body.className = 'unsupported'
+		document.body.onmousedown = e=>window.close();
+		return
+	}
+	hostName = parsedUrl.hostname;
 	reloadSettings()
 })
 

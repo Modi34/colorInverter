@@ -3,17 +3,14 @@ html{
 }
 
 body, form{
-	margin: 0;
-}
-
-#form{
 	text-align: center;
-	margin: 0 0 0 0;
+	margin: 0;
 }
 
 .forEnabled{
 	display: none;
 }
+
 .enabled .forEnabled{
 	display: block;
 }
@@ -90,4 +87,19 @@ span{
 b{
 	background: #efefef;
 	padding: 3px 5px 2px 5px;
+}
+
+.forUnsupported{
+	display: none;
+	width: 400px;
+	margin: 0;
+	padding: 10px 0;
+	user-select: none;
+}
+
+.unsupported .forUnsupported{
+	display: table;
+}
+.unsupported #form{
+	display: none;
 }
