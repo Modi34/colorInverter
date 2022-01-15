@@ -14,7 +14,6 @@ function getActiveTab(callback){
 
 getActiveTab(tab => {
 	if(!tab){return}
-	console.log(tab)
 
 	let parsedUrl = new URL(tab.url)
 	if(parsedUrl.protocol == 'chrome:'){
